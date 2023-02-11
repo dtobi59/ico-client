@@ -9,6 +9,7 @@ import {
 	BUSDAbi
 } from "../lib/constants"
 import Swal from 'sweetalert2'
+import { ethers } from 'ethers';
 
 export default function Ico() {
 
@@ -52,7 +53,7 @@ export default function Ico() {
 	}
 
 	const validateInput = () =>{
-		if(!beneficiary  || !amount ){
+		if(!beneficiary  || !amount || !ethers.utils.isAddress(beneficiary)){
 			throw new Error("Enter Valid Benefiaciary and Amount");
 		}
 	}
@@ -79,7 +80,7 @@ export default function Ico() {
 			Swal.fire({
 				icon: 'error',
 				title: 'Error Occured',
-				text: error
+				text: error.reason
 			})
 		}); 
 
@@ -191,7 +192,7 @@ export default function Ico() {
                                             <input 
 											value={amount}
 											onChange={(e) => setAmount(e.target.value)}
-											type="text" 
+											type="number" 
 											name="Amount" className="form-control" placeholder="Amount*" required=""/>
                                         </div>
                                     </div>                                 
